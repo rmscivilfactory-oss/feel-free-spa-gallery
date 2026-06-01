@@ -28,10 +28,13 @@ window.FEEL_FREE_THERAPISTS = [
     name: "Therapist F",
     image: "/images/therapist6.jpg",
     tags: ["Couple spa", "Home visit", "Popular"]
-  }
+  },
   {
-    name: "Therapist H",
-    image: "/images/therapist7.jpg",
-    tags: ["Couple spa", "Home visit", "Popular"]
-  }
+    "name": "Keerthana",
+    "image": "/images/therapist7.jpg",
+    "tags": [
+      "now"
+    ]
+  },
+ 
 ];
