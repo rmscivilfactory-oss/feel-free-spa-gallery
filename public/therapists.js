@@ -35,6 +35,6 @@ window.FEEL_FREE_THERAPISTS = [
     "tags": [
       "now"
     ]
-  },
+  }
  
 ];
