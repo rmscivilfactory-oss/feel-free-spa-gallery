@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Feel Free Spa | Therapist Manager</title>
+  <style>
+    :root {
+      --ink: #1d1a17;
+      --muted: #6e655d;
+      --line: #dfd7cf;
+      --paper: #fffaf4;
+      --brand: #137c72;
+      --brand-dark: #0d5d55;
+      --rose: #b74d66;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(120deg, rgba(19, 124, 114, 0.12), transparent 34%),
+        linear-gradient(240deg, rgba(183, 77, 102, 0.10), transparent 38%),
+        var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    main {
+      width: min(1080px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 32px 0;
+    }
+
+    header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel,
+    .card,
+    textarea {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.93);
+      box-shadow: 0 12px 30px rgba(45, 36, 26, 0.09);
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      color: var(--ink);
+      font: inherit;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(19, 124, 114, 0.14);
+    }
+
+    button {
+      min-height: 42px;
+      border: 0;
+      border-radius: 6px;
+      padding: 10px 13px;
+      color: #fff;
+      background: var(--brand);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:hover { background: var(--brand-dark); }
+    button.secondary { background: #584f46; }
+    button.danger { background: var(--rose); }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      overflow: hidden;
+    }
+
+    .card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #e7dfd7;
+    }
+
+    .card-body {
+      padding: 12px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .tags span {
+      border-radius: 999px;
+      padding: 5px 7px;
+      color: #4b4138;
+      background: #f3ede6;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 220px;
+      margin-top: 16px;
+      padding: 12px;
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      resize: vertical;
+    }
+
+    .note {
+      border-left: 4px solid #d49b42;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+    }
+
+    @media (max-width: 820px) {
+      header,
+      .grid {
+        display: block;
+      }
+
+      .panel {
+        margin-bottom: 16px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Therapist manager</h1>
+        <p>Add, edit, remove, and reorder therapist profiles. Then update <strong>therapists.js</strong>.</p>
+      </div>
+      <button id="copyButton" type="button">Copy therapists.js</button>
+    </header>
+
+    <div class="grid">
+      <section class="panel">
+        <label>
+          Therapist name
+          <input id="name" placeholder="Therapist A">
+        </label>
+        <label>
+          Image filename
+          <input id="image" placeholder="therapist1.jpg">
+        </label>
+        <label>
+          Tags
+          <input id="tags" placeholder="Relaxation, Deep tissue, Available today">
+        </label>
+        <div class="actions">
+          <button id="addButton" type="button">Add profile</button>
+          <button class="secondary" id="resetButton" type="button">Load sample</button>
+        </div>
+        <p class="note">Upload photos in <strong>public/images</strong>. Use simple filenames like <strong>therapist7.jpg</strong>.</p>
+      </section>
+
+      <section>
+        <div class="cards" id="cards"></div>
+        <textarea id="output" spellcheck="false"></textarea>
+      </section>
+    </div>
+  </main>
+
+  <script src="/therapists.js"></script>
+  <script>
+    var profiles = JSON.parse(JSON.stringify(window.FEEL_FREE_THERAPISTS || []));
+    var cards = document.getElementById("cards");
+    var output = document.getElementById("output");
+    var nameInput = document.getElementById("name");
+    var imageInput = document.getElementById("image");
+    var tagsInput = document.getElementById("tags");
+
+    function imagePath(filename) {
+      if (/^https?:\/\//.test(filename) || filename.charAt(0) === "/") return filename;
+      return "/images/" + filename;
+    }
+
+    function render() {
+      cards.innerHTML = profiles.map(function (profile, index) {
+        var tags = (profile.tags || []).map(function (tag) {
+          return "<span>" + tag + "</span>";
+        }).join("");
+
+        return [
+          "<article class=\"card\">",
+            "<img src=\"" + imagePath(profile.image || "") + "\" alt=\"\">",
+            "<div class=\"card-body\">",
+              "<h3>" + (profile.name || "Therapist") + "</h3>",
+              "<div class=\"tags\">" + tags + "</div>",
+              "<div class=\"actions\">",
+                "<button class=\"secondary\" type=\"button\" data-up=\"" + index + "\">Up</button>",
+                "<button class=\"danger\" type=\"button\" data-remove=\"" + index + "\">Remove</button>",
+              "</div>",
+            "</div>",
+          "</article>"
+        ].join("");
+      }).join("");
+
+      output.value = "window.FEEL_FREE_THERAPISTS = " + JSON.stringify(profiles.map(function (profile) {
+        return {
+          name: profile.name,
+          image: imagePath(profile.image || ""),
+          tags: profile.tags || []
+        };
+      }), null, 2) + ";\n";
+    }
+
+    document.getElementById("addButton").addEventListener("click", function () {
+      var name = nameInput.value.trim();
+      var image = imageInput.value.trim();
+      var tags = tagsInput.value.split(",").map(function (tag) {
+        return tag.trim();
+      }).filter(Boolean);
+
+      if (!name || !image) {
+        alert("Enter therapist name and image filename.");
+        return;
+      }
+
+      profiles.push({ name: name, image: imagePath(image), tags: tags });
+      nameInput.value = "";
+      imageInput.value = "";
+      tagsInput.value = "";
+      render();
+    });
+
+    document.getElementById("resetButton").addEventListener("click", function () {
+      profiles = JSON.parse(JSON.stringify(window.FEEL_FREE_THERAPISTS || []));
+      render();
+    });
+
+    document.getElementById("copyButton").addEventListener("click", async function () {
+      await navigator.clipboard.writeText(output.value);
+      this.textContent = "Copied";
+      setTimeout(function () {
+        document.getElementById("copyButton").textContent = "Copy therapists.js";
+      }, 1200);
+    });
+
+    cards.addEventListener("click", function (event) {
+      var remove = event.target.getAttribute("data-remove");
+      var up = event.target.getAttribute("data-up");
+
+      if (remove !== null) {
+        profiles.splice(Number(remove), 1);
+        render();
+      }
+
+      if (up !== null) {
+        var index = Number(up);
+        if (index > 0) {
+          var item = profiles.splice(index, 1)[0];
+          profiles.splice(index - 1, 0, item);
+          render();
+        }
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
