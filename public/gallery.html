@@ -407,90 +407,13 @@
         <p>Photos are preview quality. Final availability is confirmed by WhatsApp after booking details are shared.</p>
       </div>
 
-      <div class="gallery">
-        <article class="card">
-          <div class="photo-wrap">
-            <img src="/images/therapist1.jpg" alt="Therapist profile 1" loading="lazy">
-            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
-            <div class="trace" data-trace></div>
-          </div>
-          <div class="card-body">
-            <h3>Therapist A</h3>
-            <div class="meta"><span>Relaxation</span><span>Deep tissue</span><span>Available today</span></div>
-            <a class="button" data-book="Therapist A" href="#">Book on WhatsApp</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="photo-wrap">
-            <img src="/images/therapist2.jpg" alt="Therapist profile 2" loading="lazy">
-            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
-            <div class="trace" data-trace></div>
-          </div>
-          <div class="card-body">
-            <h3>Therapist B</h3>
-            <div class="meta"><span>Aroma spa</span><span>Swedish</span><span>Evening slots</span></div>
-            <a class="button" data-book="Therapist B" href="#">Book on WhatsApp</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="photo-wrap">
-            <img src="/images/therapist3.jpg" alt="Therapist profile 3" loading="lazy">
-            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
-            <div class="trace" data-trace></div>
-          </div>
-          <div class="card-body">
-            <h3>Therapist C</h3>
-            <div class="meta"><span>Balinese</span><span>Stress relief</span><span>Premium</span></div>
-            <a class="button" data-book="Therapist C" href="#">Book on WhatsApp</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="photo-wrap">
-            <img src="/images/therapist4.jpg" alt="Therapist profile 4" loading="lazy">
-            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
-            <div class="trace" data-trace></div>
-          </div>
-          <div class="card-body">
-            <h3>Therapist D</h3>
-            <div class="meta"><span>Thai spa</span><span>Body massage</span><span>On request</span></div>
-            <a class="button" data-book="Therapist D" href="#">Book on WhatsApp</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="photo-wrap">
-            <img src="/images/therapist5.jpg" alt="Therapist profile 5" loading="lazy">
-            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
-            <div class="trace" data-trace></div>
-          </div>
-          <div class="card-body">
-            <h3>Therapist E</h3>
-            <div class="meta"><span>Oil massage</span><span>Body relax</span><span>Verified</span></div>
-            <a class="button" data-book="Therapist E" href="#">Book on WhatsApp</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="photo-wrap">
-            <img src="/images/therapist6.jpg" alt="Therapist profile 6" loading="lazy">
-            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
-            <div class="trace" data-trace></div>
-          </div>
-          <div class="card-body">
-            <h3>Therapist F</h3>
-            <div class="meta"><span>Couple spa</span><span>Home visit</span><span>Popular</span></div>
-            <a class="button" data-book="Therapist F" href="#">Book on WhatsApp</a>
-          </div>
-        </article>
-      </div>
+      <div class="gallery" id="gallery"></div>
 
       <p class="notice">This private gallery link expires automatically. Availability is confirmed only after WhatsApp booking.</p>
     </section>
   </main>
 
+  <script src="/therapists.js"></script>
   <script>
     (function () {
       var SPA_WHATSAPP_NUMBER = "918148243019";
@@ -501,6 +424,43 @@
       var stateText = document.getElementById("stateText");
       var body = document.body;
       var timer;
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function renderTherapists() {
+        var gallery = document.getElementById("gallery");
+        var therapists = Array.isArray(window.FEEL_FREE_THERAPISTS) ? window.FEEL_FREE_THERAPISTS : [];
+
+        gallery.innerHTML = therapists.map(function (therapist, index) {
+          var name = escapeHtml(therapist.name || "Therapist " + (index + 1));
+          var image = escapeHtml(therapist.image || "/images/therapist" + (index + 1) + ".jpg");
+          var tags = Array.isArray(therapist.tags) ? therapist.tags : [];
+          var tagHtml = tags.map(function (tag) {
+            return "<span>" + escapeHtml(tag) + "</span>";
+          }).join("");
+
+          return [
+            "<article class=\"card\">",
+              "<div class=\"photo-wrap\">",
+                "<img src=\"" + image + "\" alt=\"" + name + "\" loading=\"lazy\">",
+                "<div class=\"watermark\">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>",
+                "<div class=\"trace\" data-trace></div>",
+              "</div>",
+              "<div class=\"card-body\">",
+                "<h3>" + name + "</h3>",
+                "<div class=\"meta\">" + tagHtml + "</div>",
+                "<a class=\"button\" data-book=\"" + name + "\" href=\"#\">Book on WhatsApp</a>",
+              "</div>",
+            "</article>"
+          ].join("");
+        }).join("");
+      }
 
       function nowStamp() {
         return new Date().toLocaleString("en-IN", {
@@ -583,6 +543,7 @@
         }
       }
 
+      renderTherapists();
       ["contextmenu", "selectstart", "dragstart", "copy", "cut", "paste"].forEach(function (eventName) {
         document.addEventListener(eventName, function (event) {
           event.preventDefault();
