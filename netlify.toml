@@ -11,3 +11,8 @@
   from = "/gallery"
   to = "/gallery.html"
   status = 200
+
+[[redirects]]
+  from = "/manager"
+  to = "/manager.html"
+  status = 200
