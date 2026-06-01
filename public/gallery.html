@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Feel Free Spa | Private Gallery</title>
+  <style>
+    :root {
+      --ink: #1c1a17;
+      --muted: #6f665d;
+      --line: #dfd7cf;
+      --paper: #fffaf4;
+      --panel: #ffffff;
+      --brand: #137c72;
+      --brand-dark: #0d5d55;
+      --rose: #b74d66;
+      --gold: #d49b42;
+      --shadow: 0 16px 44px rgba(45, 36, 26, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(120deg, rgba(19, 124, 114, 0.12), transparent 34%),
+        linear-gradient(240deg, rgba(183, 77, 102, 0.10), transparent 38%),
+        var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    img {
+      max-width: 100%;
+      pointer-events: none;
+      -webkit-user-drag: none;
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 22px 0 34px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 10px 0 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(145deg, var(--brand), var(--rose));
+      font-weight: 700;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .pill {
+      flex: 0 0 auto;
+      border: 1px solid rgba(19, 124, 114, 0.22);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--brand-dark);
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .hero {
+      min-height: 260px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(255, 250, 244, 0.96), rgba(255, 250, 244, 0.64)),
+        url("/images/spa-hero.jpg") center / cover;
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--rose);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 700px;
+      margin: 0;
+      font-size: clamp(34px, 6vw, 64px);
+      line-height: 0.98;
+    }
+
+    .hero p:last-child {
+      max-width: 540px;
+      margin: 16px 0 0;
+      color: #3e3831;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 30px 0 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.05;
+    }
+
+    .section-head p {
+      max-width: 450px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      text-align: right;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 10px 24px rgba(45, 36, 26, 0.08);
+    }
+
+    .photo-wrap {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: #e7dfd7;
+    }
+
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.92) contrast(0.96);
+    }
+
+    .photo-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        repeating-linear-gradient(
+          -28deg,
+          rgba(255, 255, 255, 0.00) 0,
+          rgba(255, 255, 255, 0.00) 42px,
+          rgba(255, 255, 255, 0.22) 43px,
+          rgba(255, 255, 255, 0.22) 44px
+        );
+      pointer-events: none;
+    }
+
+    .watermark {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      color: rgba(255, 255, 255, 0.70);
+      font-size: clamp(17px, 4vw, 28px);
+      font-weight: 900;
+      line-height: 1.35;
+      text-align: center;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.48);
+      transform: rotate(-18deg);
+      pointer-events: none;
+    }
+
+    .trace {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      z-index: 4;
+      max-width: calc(100% - 16px);
+      border-radius: 4px;
+      padding: 6px 8px;
+      color: #fff;
+      background: rgba(28, 26, 23, 0.68);
+      font-size: 10px;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+      pointer-events: none;
+    }
+
+    .card-body {
+      padding: 14px;
+    }
+
+    .card-body h3 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+
+    .meta span {
+      border-radius: 999px;
+      padding: 6px 8px;
+      color: #4b4138;
+      background: #f3ede6;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 46px;
+      border: 0;
+      border-radius: 6px;
+      padding: 12px 14px;
+      color: #fff;
+      background: #118c46;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .button:hover { background: #0d7439; }
+
+    .notice {
+      margin: 20px 0 0;
+      border-left: 4px solid var(--gold);
+      padding: 12px 14px;
+      color: #51463b;
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .state {
+      min-height: 70vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .state-box {
+      width: min(460px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .state-box h1 {
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .state-box p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .privacy-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      color: #fff;
+      background: rgba(14, 12, 10, 0.94);
+      text-align: center;
+    }
+
+    .privacy-screen strong {
+      display: block;
+      max-width: 520px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    body.is-hidden .privacy-screen { display: grid; }
+    body:not(.ready) .shell { display: none; }
+    body.ready .state { display: none; }
+
+    @media (max-width: 860px) {
+      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+      .section-head p { text-align: left; }
+    }
+
+    @media (max-width: 560px) {
+      .shell {
+        width: min(100% - 18px, 1120px);
+        padding-top: 12px;
+      }
+      .topbar { align-items: start; }
+      .pill {
+        max-width: 128px;
+        white-space: normal;
+        text-align: center;
+      }
+      .hero {
+        min-height: 0;
+        padding: 18px;
+      }
+      h1 { font-size: 38px; }
+      .gallery { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="privacy-screen">
+    <strong>Gallery paused. Tap back on the page to continue.</strong>
+  </div>
+
+  <section class="state" id="state">
+    <div class="state-box">
+      <h1 id="stateTitle">Checking private link</h1>
+      <p id="stateText">Please wait a moment.</p>
+    </div>
+  </section>
+
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">FF</div>
+        <div>
+          <p class="brand-title">Feel Free Spa</p>
+          <p class="brand-sub">Doorstep spa service in Chennai</p>
+        </div>
+      </div>
+      <div class="pill" id="countdown">3:00 left</div>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">Therapist selection</p>
+      <h1>Choose your preferred therapist</h1>
+      <p>View available therapist profiles and send your selection directly to our booking team on WhatsApp.</p>
+    </section>
+
+    <section aria-label="Therapist gallery">
+      <div class="section-head">
+        <h2>Available profiles</h2>
+        <p>Photos are preview quality. Final availability is confirmed by WhatsApp after booking details are shared.</p>
+      </div>
+
+      <div class="gallery">
+        <article class="card">
+          <div class="photo-wrap">
+            <img src="/images/therapist1.jpg" alt="Therapist profile 1" loading="lazy">
+            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
+            <div class="trace" data-trace></div>
+          </div>
+          <div class="card-body">
+            <h3>Therapist A</h3>
+            <div class="meta"><span>Relaxation</span><span>Deep tissue</span><span>Available today</span></div>
+            <a class="button" data-book="Therapist A" href="#">Book on WhatsApp</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="photo-wrap">
+            <img src="/images/therapist2.jpg" alt="Therapist profile 2" loading="lazy">
+            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
+            <div class="trace" data-trace></div>
+          </div>
+          <div class="card-body">
+            <h3>Therapist B</h3>
+            <div class="meta"><span>Aroma spa</span><span>Swedish</span><span>Evening slots</span></div>
+            <a class="button" data-book="Therapist B" href="#">Book on WhatsApp</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="photo-wrap">
+            <img src="/images/therapist3.jpg" alt="Therapist profile 3" loading="lazy">
+            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
+            <div class="trace" data-trace></div>
+          </div>
+          <div class="card-body">
+            <h3>Therapist C</h3>
+            <div class="meta"><span>Balinese</span><span>Stress relief</span><span>Premium</span></div>
+            <a class="button" data-book="Therapist C" href="#">Book on WhatsApp</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="photo-wrap">
+            <img src="/images/therapist4.jpg" alt="Therapist profile 4" loading="lazy">
+            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
+            <div class="trace" data-trace></div>
+          </div>
+          <div class="card-body">
+            <h3>Therapist D</h3>
+            <div class="meta"><span>Thai spa</span><span>Body massage</span><span>On request</span></div>
+            <a class="button" data-book="Therapist D" href="#">Book on WhatsApp</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="photo-wrap">
+            <img src="/images/therapist5.jpg" alt="Therapist profile 5" loading="lazy">
+            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
+            <div class="trace" data-trace></div>
+          </div>
+          <div class="card-body">
+            <h3>Therapist E</h3>
+            <div class="meta"><span>Oil massage</span><span>Body relax</span><span>Verified</span></div>
+            <a class="button" data-book="Therapist E" href="#">Book on WhatsApp</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="photo-wrap">
+            <img src="/images/therapist6.jpg" alt="Therapist profile 6" loading="lazy">
+            <div class="watermark">FEEL FREE SPA<br><span data-watermark>PRIVATE VIEW</span></div>
+            <div class="trace" data-trace></div>
+          </div>
+          <div class="card-body">
+            <h3>Therapist F</h3>
+            <div class="meta"><span>Couple spa</span><span>Home visit</span><span>Popular</span></div>
+            <a class="button" data-book="Therapist F" href="#">Book on WhatsApp</a>
+          </div>
+        </article>
+      </div>
+
+      <p class="notice">This private gallery link expires automatically. Availability is confirmed only after WhatsApp booking.</p>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var SPA_WHATSAPP_NUMBER = "918148243019";
+      var params = new URLSearchParams(window.location.search);
+      var token = params.get("t") || "";
+      var countdown = document.getElementById("countdown");
+      var stateTitle = document.getElementById("stateTitle");
+      var stateText = document.getElementById("stateText");
+      var body = document.body;
+      var timer;
+
+      function nowStamp() {
+        return new Date().toLocaleString("en-IN", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+      }
+
+      function showExpired(message) {
+        body.classList.remove("ready");
+        stateTitle.textContent = "Link expired";
+        stateText.textContent = message || "Please request a new gallery link on WhatsApp.";
+        window.clearInterval(timer);
+      }
+
+      function startCountdown(exp, serverTime) {
+        var clockOffset = Date.now() - Number(serverTime || Date.now());
+
+        function tick() {
+          var left = Number(exp) - (Date.now() - clockOffset);
+          if (left <= 0) {
+            showExpired("This 3-minute gallery link has expired.");
+            return;
+          }
+
+          var totalSeconds = Math.ceil(left / 1000);
+          var minutes = Math.floor(totalSeconds / 60);
+          var seconds = String(totalSeconds % 60).padStart(2, "0");
+          countdown.textContent = minutes + ":" + seconds + " left";
+        }
+
+        tick();
+        timer = window.setInterval(tick, 1000);
+      }
+
+      function applyCustomer(data) {
+        var traceText = "Viewed by " + data.phone + " | " + nowStamp();
+
+        document.querySelectorAll("[data-watermark]").forEach(function (item) {
+          item.textContent = data.phone;
+        });
+
+        document.querySelectorAll("[data-trace]").forEach(function (item) {
+          item.textContent = traceText;
+        });
+
+        document.querySelectorAll("[data-book]").forEach(function (link) {
+          var therapist = link.getAttribute("data-book");
+          var message = [
+            "Hello Feel Free Spa,",
+            "Customer: " + (data.name || "Customer"),
+            "Phone: " + data.phone,
+            "I want to book " + therapist + "."
+          ].join("\n");
+          link.href = "https://wa.me/" + SPA_WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+        });
+
+        body.classList.add("ready");
+        startCountdown(data.exp, data.serverTime);
+      }
+
+      async function verify() {
+        if (!token) {
+          showExpired("This private gallery link is missing a valid token.");
+          return;
+        }
+
+        try {
+          var response = await fetch("/.netlify/functions/verify-token?t=" + encodeURIComponent(token), {
+            cache: "no-store"
+          });
+          var data = await response.json();
+          if (!response.ok || !data.valid) throw new Error(data.error || "Invalid link");
+          applyCustomer(data);
+        } catch (error) {
+          showExpired(error.message);
+        }
+      }
+
+      ["contextmenu", "selectstart", "dragstart", "copy", "cut", "paste"].forEach(function (eventName) {
+        document.addEventListener(eventName, function (event) {
+          event.preventDefault();
+        });
+      });
+
+      document.addEventListener("keydown", function (event) {
+        var key = String(event.key || "").toLowerCase();
+        var blocked =
+          key === "printscrn" ||
+          key === "printscreen" ||
+          key === "f12" ||
+          (event.ctrlKey && ["s", "p", "u", "c", "x"].indexOf(key) !== -1) ||
+          (event.ctrlKey && event.shiftKey && ["i", "j", "c"].indexOf(key) !== -1);
+
+        if (blocked) {
+          event.preventDefault();
+          body.classList.add("is-hidden");
+          window.setTimeout(function () {
+            body.classList.remove("is-hidden");
+          }, 1600);
+        }
+      });
+
+      document.addEventListener("visibilitychange", function () {
+        body.classList.toggle("is-hidden", document.hidden);
+      });
+
+      window.addEventListener("blur", function () {
+        body.classList.add("is-hidden");
+      });
+
+      window.addEventListener("focus", function () {
+        body.classList.remove("is-hidden");
+      });
+
+      verify();
+    }());
+  </script>
+</body>
+</html>
